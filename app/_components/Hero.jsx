@@ -5,10 +5,14 @@ import { Button } from '@/components/ui/button'
 function Hero() {
   return (
     <div className='flex items-center gap-3 flex-col justify-center pt-14 pb-7'>
-        <h2 className='font-bold text-[46px] text-center'>Find Home 
-        <span className='text-primary'> Services/Repair</span>
-        <br></br>Near You</h2>
-        <h2 className='text-xl text-gray-400'>Explore Best Home Service & Repair Near You</h2>
+        <h2 className='font-bold text-[46px] text-center'>
+        <span className='text-primary'> Trusted Care </span>
+        <br></br>
+        For Home and Loved Ones
+        
+        </h2>
+
+        <h2 className='text-xl text-gray-400'>Discover our reliable and committed service ❤️</h2>
     
         <div className='mt-4 flex gap-4 items-center'>
             <Input placeholder='Search'
