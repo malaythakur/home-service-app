@@ -16,6 +16,7 @@ function CategoryList({categoryList}) {
                     alt='icon'
                     width={35}
                     height={35}
+                    priority
                     />
 
 
