@@ -20,6 +20,7 @@ function BusinessList({businessList,title}) {
                     height={200}
                     className='h-[150px] md:h-[200px] object-cover rounded-lg'
                     style={{ width: "auto", height: "auto" }}
+                    priority
                     />
 
                     <div className='flex flex-col items-baseline p-3 gap-1'>
@@ -48,7 +49,7 @@ function BusinessList({businessList,title}) {
             ))
         :
         [1,2,3,4,5,6,7,8].map((item,index)=>(
-            <div className='w-full h-[300px] bg-[#F0F0F0] rounded-lg animate-pulse'>
+            <div key={index}  className='w-full h-[300px] bg-[#F0F0F0] rounded-lg animate-pulse'>
             
             </div>
 
