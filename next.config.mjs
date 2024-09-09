@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode:false,
-    images:{
-        domains:['ap-south-1.graphassets.com']
-    }
+    images: {
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: 'ap-south-1.graphassets.com',
+          },
+        ],
+      }
+      
 };
 
 export default nextConfig;
