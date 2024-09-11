@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import { Button } from '@/components/ui/button'
 
-function BusinessList({businessList,title}) {
+function BusinessList({businessList = [],title}) {
   return (
     <div className='mt-5'>
         <h2 className='font-bold text-[22px]'>
