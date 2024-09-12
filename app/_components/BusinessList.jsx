@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 function BusinessList({businessList = [],title}) {
@@ -11,7 +12,8 @@ function BusinessList({businessList = [],title}) {
         
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-5'>
             {businessList.length>0?businessList.map((business,index)=>(
-                <div key={index} className='shadow-md rounded-lg
+                <Link href={'/details/'+business.id} 
+                key={index} className='shadow-md rounded-lg
                 hover:shadow-lg cursor-pointer hover:shadow-primary
                 hover:scale-105 transition-all ease-in-out'>
                     <Image src={business?.images[0].url}
@@ -44,7 +46,7 @@ function BusinessList({businessList = [],title}) {
                         </Button>
                     </div>
 
-                </div>
+                </Link>
 
             ))
         :
