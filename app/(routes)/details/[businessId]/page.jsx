@@ -40,8 +40,8 @@ function BusinessDetail({params}) {
     <div className='py-8 md:py-20 px-10 md:px-36'>
         <BusinessInfo business={business} />
 
-        <div className='grid grid-cols-4 mt-8'>
-            <div className='col-span-3'>
+        <div className='grid grid-cols-4 mt-16'>
+            <div className='col-span-4 md:col-span-3'>
                 <BusinessDescription business={business}/>
             </div>
 
