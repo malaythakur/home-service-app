@@ -2,6 +2,8 @@ import { request, gql } from 'graphql-request';
 
 const MASTER_URL='https://ap-south-1.cdn.hygraph.com/content/'+process.env.NEXT_PUBLIC_MASTER_URL_KEY+'/master'
 
+const token = process.env.NEXT_PUBLIC_HYPERGRAPH_AUTH_TOKEN;
+
 const getCategory=async()=>{
         const query=gql`
         query Category {
@@ -17,7 +19,11 @@ const getCategory=async()=>{
             }
         }
         `
-        const result = await request(MASTER_URL,query)
+        const result = await request(MASTER_URL,query, {
+          headers: {
+            Authorization: `Bearer ${token}`,  // The API uses this token to validate the request
+          },
+        });
         return result
 }
 
@@ -40,7 +46,11 @@ const getAllBusinessList=async()=>{
         }
     }
     `
-    const result= await request(MASTER_URL,query)
+    const result= await request(MASTER_URL,query, {
+      headers: {
+        Authorization: `Bearer ${token}`,  // The API uses this token to validate the request
+      },
+    });
     return result;
 }
 
@@ -64,7 +74,11 @@ const getBusinessByCategory=async(category)=>{
   }
 }
     `
-    const result= await request(MASTER_URL,query)
+    const result= await request(MASTER_URL,query, {
+      headers: {
+        Authorization: `Bearer ${token}`,  // The API uses this token to validate the request
+      },
+    });
     return result;
 }
 
@@ -87,13 +101,45 @@ const getBusinessById=async(id)=>{
   }
 } 
     `
-    const result= await request(MASTER_URL,query)
+    const result= await request(MASTER_URL,query, {
+      headers: {
+        Authorization: `Bearer ${token}`,  // The API uses this token to validate the request
+      },
+    });
     return result;
 }
 
+    const createNewBooking = async (businessId, date, time, userEmail, userName)=>{
+        const mutationQuery = gql`
+              mutation CreateBooking {
+    createBooking(
+      data: {bookingStatus: booked, 
+      businessList: {connect: {id: "`+businessId+`"}}, 
+
+      date: "`+date+`",
+      time: "`+time+`", 
+      userEmail: "`+userEmail+`",
+      userName: "`+userName+`" 
+      }
+    ) {
+      id
+    }
+       publishManyBookings(to: PUBLISHED) {
+      count
+    }
+  }`
+
+        const result = await request(MASTER_URL,mutationQuery, {
+          headers: {
+            Authorization: `Bearer ${token}`,  // The API uses this token to validate the request
+          },
+        });  
+        return result;
+    }
 export default{
     getCategory,
     getAllBusinessList,
     getBusinessByCategory,
-    getBusinessById
+    getBusinessById,
+    createNewBooking
 }
