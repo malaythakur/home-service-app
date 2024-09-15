@@ -131,15 +131,32 @@ const getBusinessById=async(id)=>{
 
         const result = await request(MASTER_URL,mutationQuery, {
           headers: {
-            Authorization: `Bearer ${token}`,  // The API uses this token to validate the request
+            Authorization: `Bearer ${token}`,  
           },
         });  
         return result;
     }
+
+  const BusinessBookedSlot=async(businessId,date)=>{
+    const query=gql`
+    query BusinessBookedSlot {
+      bookings(where: {businessList: {id: "`+businessId+`"}, date: "`+date+`"}) {
+      date
+      time
+  }
+}`
+    const result=await request(MASTER_URL,query, {
+      headers: {
+        Authorization: `Bearer ${token}`,  
+      },
+    });  
+    return result;
+  }
 export default{
     getCategory,
     getAllBusinessList,
     getBusinessByCategory,
     getBusinessById,
-    createNewBooking
+    createNewBooking,
+    BusinessBookedSlot
 }
