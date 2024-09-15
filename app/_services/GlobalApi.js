@@ -152,11 +152,38 @@ const getBusinessById=async(id)=>{
     });  
     return result;
   }
+
+  const GetUserBookingHistory=async(userEmail)=>{
+    const query=gql`
+    query GetUserBookingHistory {
+  bookings(where: {userEmail: "`+userEmail+`"}, orderBy: publishedAt_DESC) {
+    businessList {
+      name
+      images {
+        url
+      }
+      contactPerson
+      address
+    }
+    date
+    time
+  }
+}
+    `
+    const result=await request(MASTER_URL,query, {
+      headers: {
+        Authorization: `Bearer ${token}`,  
+      },
+    });  
+    return result;
+  }
+
 export default{
     getCategory,
     getAllBusinessList,
     getBusinessByCategory,
     getBusinessById,
     createNewBooking,
-    BusinessBookedSlot
+    BusinessBookedSlot,
+    GetUserBookingHistory
 }
