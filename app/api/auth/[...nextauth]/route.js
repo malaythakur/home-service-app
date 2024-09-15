@@ -18,10 +18,11 @@ export const authOptions = {
 					name: profile.name,
 					email: profile.email,
 					image: profile.picture,
-				}
+				};
 			},
 		}
 	],
+    secret: process.env.NEXTAUTH_SECRET,
 
     callbacks: {
         async jwt({token, account, profile}) {
