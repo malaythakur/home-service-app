@@ -18,15 +18,29 @@ import { toast } from 'sonner';
 import moment from 'moment';
 
 function BookingSection({children, business}) {
-    const [date, setDate] = useState(new Date());
-    const [timeSlot, setTimeSlot] = useState([]);
-    const [selectedTime,setSelectedTime] = useState();
-    const {data}= useSession(); 
+    const [date, setDate]=useState(new Date());
+    const [timeSlot, setTimeSlot]=useState([]);
+    const [selectedTime,setSelectedTime]=useState();
+    const [bookedSlot, setBookedSlot]=useState([]);
+    const {data}=useSession(); 
+    
     useEffect(()=>{
         getTime();
-        setDate();
-        setSelectedTime('');
-    }, [])
+        
+    },[])
+
+    useEffect(()=>{
+        date&&BusinessBookedSlot();
+    },[date])
+
+    const BusinessBookedSlot=()=>{
+        GlobalApi.BusinessBookedSlot(business.id,moment(date).format('DD-MMM-yyyy'))
+        .then(resp=>{
+            console.log(resp)
+            setBookedSlot(resp.bookings)
+        })
+    }
+    
 
     const getTime = () => {
         const timeList = [];
@@ -44,7 +58,7 @@ function BookingSection({children, business}) {
     
         setTimeSlot(timeList);
     };
-    
+
     const saveBooking=()=>{
 
         GlobalApi.createNewBooking(business.id,moment(date).format('DD-MMM-yyyy'),selectedTime,data.user.email,data.user.name)
@@ -61,7 +75,11 @@ function BookingSection({children, business}) {
     ,(e) => {
         toast('Error while creating Booking!');
     });
-}
+}  
+
+    const isSlotBooked=(time)=>{
+        return bookedSlot.find(item=>item.time==time)
+    }
   return (
     <div>
         
@@ -94,6 +112,7 @@ function BookingSection({children, business}) {
                 <div className='grid grid-cols-3 gap-3'>
                     {timeSlot.map((item,index)=>(
                         <Button key={index}
+                        disabled={isSlotBooked(item.time)}
                         variant='outline'
                         className={`border rounded-full
                             p-2 px-3 hover:bg-primary
